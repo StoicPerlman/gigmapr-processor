@@ -15,4 +15,5 @@ setup(
     author_email='sam@skleiner.com',
     license='MIT',
     install_requires=['redis~=2.10.6', 'celery', 'requests', 'beautifulsoup4'],
+    setup_requires=['redis~=2.10.6', 'celery', 'requests', 'beautifulsoup4'],
 )
