@@ -6,7 +6,7 @@ with open('README.md') as f:
 setup(
     name='gigmapr-processor',
     python_requires='>3.5.0',
-    version='0.2.0',
+    version='0.3.0',
     packages=['gigmapr_processor'],
     description='Celery task definition for gigmapr',
     long_description=readme,
