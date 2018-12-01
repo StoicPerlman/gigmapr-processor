@@ -21,19 +21,20 @@ def process_job(job_id, post_date, location):
     if resp.status_code == 200:
         bs = BeautifulSoup(resp.text, features='html.parser')
     else:
-        log.error(f'Error processing job:{job_id}\n' \
+        log.error(f'Error processing job: {job_id}\n' \
                     + f'Response code: {resp.status_code}\n' \
-                    + f'Body:{resp.text}')
+                    + f'Body: {resp.text}')
         return
 
-    title = bs.find(id='JobViewHeader').find('h1').get_text()
-    description = bs.find(id="JobDescription").get_text()
+    full_text = bs.find(id='JobViewHeader').find('h1').get_text()
+    full_text += bs.find(id="JobDescription").get_text()
 
-    from pprint import pprint
-    pprint({
-        'job_id': job_id,
+    city, state = location.split(',')
+
+    return {
+        'id': job_id,
+        'full_text': full_text,
+        'city': city,
+        'state': state,
         'post_date': post_date,
-        'location': location,
-        'title': title,
-        'description': description
-    })
+    }

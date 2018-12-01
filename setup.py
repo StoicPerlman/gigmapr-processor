@@ -14,5 +14,5 @@ setup(
     author='Sam Kleiner',
     author_email='sam@skleiner.com',
     license='MIT',
-    install_requires=['redis~=2.10.6', 'celery', 'requests', 'beautifulsoup4'],
+    install_requires=['redis~=2.10.6', 'celery[elasticsearch]', 'requests', 'beautifulsoup4'],
 )
