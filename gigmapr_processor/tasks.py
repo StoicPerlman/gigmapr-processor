@@ -5,8 +5,8 @@ import requests
 from bs4 import BeautifulSoup
 from celery import Celery
 
-app = Celery('gigmapr-processor', broker='redis://redis:6379/0')
-app.conf.task_default_queue = 'gigmapr-processor'
+app = Celery('gigmapr-processor')
+app.config_from_object('gigmapr_processor.celeryconfig')
 
 BASE_URL = 'https://job-openings.monster.com/'
 
