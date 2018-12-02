@@ -4,6 +4,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from celery import Celery
+from gigmapr_processor.backend import GigmaprBackend
 
 app = Celery('gigmapr-processor')
 app.config_from_object('gigmapr_processor.celeryconfig')
@@ -13,7 +14,9 @@ BASE_URL = 'https://job-openings.monster.com/'
 log = logging.getLogger(__name__)
 
 
-@app.task(name='gigmapr_processor.tasks.process_job')
+@app.task(
+    name='gigmapr_processor.tasks.process_job',
+    backend=GigmaprBackend(app=app, url=app.conf.result_backend))
 def process_job(job_id, post_date, location):
     url = BASE_URL + job_id
     resp = requests.get(url)
@@ -32,7 +35,7 @@ def process_job(job_id, post_date, location):
     city, state = location.split(',')
 
     return {
-        'id': job_id,
+        'job_id': job_id,
         'full_text': full_text,
         'city': city,
         'state': state,
